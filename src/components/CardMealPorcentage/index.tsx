@@ -3,7 +3,8 @@ import { useCallback } from 'react';
 import { ItOnDiet } from '../../models/Diet';
 import {
   Container,
-  IconView,
+  IconArrowLeft,
+  IconArrowUpRight,
   SubTitle,
   Title,
   PositionArrowTypeStyleProps,
@@ -29,7 +30,11 @@ export function CardMealPorcentage({ position = 'right', porcetage } : Props) {
         activeOpacity={0.7}
         onPress={handlePressNavigate}
       >
-        <IconView isDiet={isDiet} />
+        {position === 'left' ? (
+          <IconArrowLeft isDiet={isDiet} />
+        ) : (
+          <IconArrowUpRight isDiet={isDiet} />
+        )}
       </Touch>
       <Title>{porcetage.toPrecision(4)}%</Title>
       <SubTitle>das refeições dentro da dieta</SubTitle>

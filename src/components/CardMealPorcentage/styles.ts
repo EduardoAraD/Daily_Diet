@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import { ArrowUpRight } from 'phosphor-react-native';
+import { ArrowUpRight, ArrowLeft } from 'phosphor-react-native';
 import { ItOnDiet } from '../../models/Diet';
 
 export type PositionArrowTypeStyleProps = 'left' | 'right';
@@ -28,7 +28,12 @@ export const Touch = styled.TouchableOpacity`
   padding: 8px;
 `;
 
-export const IconView = styled(ArrowUpRight).attrs<PropsIsDiet>(({ theme, isDiet }) => ({
+export const IconArrowUpRight = styled(ArrowUpRight).attrs<PropsIsDiet>(({ theme, isDiet }) => ({
+  color: isDiet === 'Yes' ? theme.colors.GREEN_DARK : theme.colors.RED_DARK,
+  size: 24,
+}))``;
+
+export const IconArrowLeft = styled(ArrowLeft).attrs<PropsIsDiet>(({ theme, isDiet }) => ({
   color: isDiet === 'Yes' ? theme.colors.GREEN_DARK : theme.colors.RED_DARK,
   size: 24,
 }))``;

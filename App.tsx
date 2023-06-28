@@ -1,8 +1,12 @@
-import { Loading } from './src/components/Loading';
-import { Home } from './src/screens/Home';
+import { StatusBar } from 'react-native';
 import { NunitoSans_700Bold, NunitoSans_400Regular, useFonts } from '@expo-google-fonts/nunito-sans';
 import { ThemeProvider } from 'styled-components/native';
+
 import theme from './src/theme';
+
+import { Loading } from './src/components/Loading';
+import { Home } from './src/screens/Home';
+import { Statistics } from './src/screens/Statistics';
 // import { theme } from './src/theme/test';
 
 export default function App() {
@@ -10,7 +14,8 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {loadingFonts ? <Home /> : <Loading />}
+      <StatusBar translucent barStyle='dark-content' />
+      {loadingFonts ? <Statistics /> : <Loading />}
     </ThemeProvider>
   );
 }

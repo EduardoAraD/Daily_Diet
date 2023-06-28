@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Button } from '../../components/Button';
-import { CardMeal } from '../../components/CardMeal';
 import { CardMealPorcentage } from '../../components/CardMealPorcentage';
 import { Header } from '../../components/Header';
 import { Spacing } from '../../components/Spacing';
 
-import { Container, DateText, TextMeal } from './styles';
+import { Container, TextMeal } from './styles';
 import { MealSmal } from '../../models/Meal';
 import { FlatList } from 'react-native';
 import { TitleWithFlatlist } from '../../components/TitleWithFlatlist';

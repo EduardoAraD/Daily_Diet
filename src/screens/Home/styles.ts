@@ -16,13 +16,3 @@ export const TextMeal = styled.Text`
   margin-top: 32px;
   margin-bottom: 12px;
 `;
-
-export const DateText = styled.Text`
-  ${({ theme }) => css`
-    font-family: ${theme.fontFamily.BOLD};
-    font-size: ${theme.fontSize.LG}px;
-    color: ${theme.colors.GRAY_1};
-  `}
-  margin-top: 32px;
-  margin-bottom: 8px;
-`;
