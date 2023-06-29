@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import { Button } from '../../components/Button';
 import { CardMealPorcentage } from '../../components/CardMealPorcentage';
 import { Header } from '../../components/Header';
 import { Spacing } from '../../components/Spacing';
-
-import { Container, TextMeal } from './styles';
-import { MealSmal } from '../../models/Meal';
-import { FlatList } from 'react-native';
 import { TitleWithFlatlist } from '../../components/TitleWithFlatlist';
 
+import { MealSmal } from '../../models/Meal';
+
+import { Container, TextMeal } from './styles';
+
 export function Home() {
+  const { navigate } = useNavigation();
+
   const [listDate, setListDate] = useState(['18.08.22', '17.08.22', '16.08.22']);
   const [list, setList] = useState<MealSmal[]>([
     { hour: '08:00', isDiet: 'Yes', name: 'Tapioca' },
@@ -18,17 +23,26 @@ export function Home() {
     { hour: '20:00', isDiet: 'No', name: 'Pão com ovo' },
   ]);
 
+  const handleNewMeal = useCallback(() => {
+    navigate('newMeal');
+  }, []);
+
   return (
     <Container>
       <Header />
       <Spacing height={32} />
-      <CardMealPorcentage porcetage={70.5674} />
+      <CardMealPorcentage
+        numberMealOnDiet={77}
+        numberMealOffDiet={32}
+        sequenceMealOnDiet={4}
+      />
       
       <TextMeal>Refeições</TextMeal>
       <Button
         icon='plus'
         text='Nova refeição'
         activeOpacity={0.7}
+        onPress={handleNewMeal}
       />
       <Spacing height={32} />
       <FlatList

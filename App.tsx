@@ -4,10 +4,9 @@ import { ThemeProvider } from 'styled-components/native';
 
 import theme from './src/theme';
 
+import { Routes } from './src/routes';
+
 import { Loading } from './src/components/Loading';
-import { Home } from './src/screens/Home';
-import { Statistics } from './src/screens/Statistics';
-// import { theme } from './src/theme/test';
 
 export default function App() {
   const [loadingFonts] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold });
@@ -15,7 +14,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar translucent barStyle='dark-content' />
-      {loadingFonts ? <Statistics /> : <Loading />}
+      {loadingFonts ? <Routes /> : <Loading />}
     </ThemeProvider>
   );
 }

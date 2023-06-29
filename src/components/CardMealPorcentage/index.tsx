@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { ItOnDiet } from '../../models/Diet';
+import { calPorcentageMealDiet, itOnDietToNumberMealDiet } from '../../utils/CalcPorcentage';
 import {
   Container,
   IconArrowLeft,
@@ -13,15 +15,29 @@ import {
 
 interface Props {
   position?: PositionArrowTypeStyleProps;
-  porcetage: number;
+  numberMealOnDiet: number;
+  numberMealOffDiet: number;
+  sequenceMealOnDiet: number;
 }
 
-export function CardMealPorcentage({ position = 'right', porcetage } : Props) {
-  const isDiet: ItOnDiet = porcetage >= 70 ? 'Yes' : 'No';
+export function CardMealPorcentage({
+  position = 'right',
+  numberMealOffDiet,
+  numberMealOnDiet,
+  sequenceMealOnDiet,
+} : Props) {
+  const { navigate } = useNavigation();
 
   const handlePressNavigate = useCallback(() => {
-    console.log(position === 'left' ? 'GO BACK' : 'NAVIGATE');
-  }, []);
+    if(position === 'left') {
+      navigate('home');
+    } else {
+      navigate('statistics', { numberMealOffDiet, numberMealOnDiet, sequenceMealOnDiet });
+    }
+  }, [numberMealOffDiet, numberMealOnDiet, sequenceMealOnDiet]);
+
+  const porcentage = calPorcentageMealDiet(numberMealOnDiet, numberMealOffDiet);
+  const isDiet: ItOnDiet = itOnDietToNumberMealDiet(numberMealOnDiet, numberMealOffDiet);
 
   return (
     <Container isDiet={isDiet}>
@@ -36,7 +52,7 @@ export function CardMealPorcentage({ position = 'right', porcetage } : Props) {
           <IconArrowUpRight isDiet={isDiet} />
         )}
       </Touch>
-      <Title>{porcetage.toPrecision(4)}%</Title>
+      <Title>{porcentage.toPrecision(4)}%</Title>
       <SubTitle>das refeições dentro da dieta</SubTitle>
     </Container>
   );

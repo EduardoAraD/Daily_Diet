@@ -1,32 +1,44 @@
 import { useMemo } from 'react';
+import { useRoute } from '@react-navigation/native';
+
 import { CardMealPorcentage } from '../../components/CardMealPorcentage';
 import { CardTitleSubtitle } from '../../components/CardTitleSubtitle';
+
 import { ItOnDiet } from '../../models/Diet';
+import { itOnDietToNumberMealDiet } from '../../utils/CalcPorcentage';
 
 import { Container, ContainerInfo, GroupView, Title, ViewPadding } from './styles';
 
+export type StatisticsRouteParams = {
+  numberMealOnDiet: number;
+  numberMealOffDiet: number;
+  sequenceMealOnDiet: number;
+}
+
 export function Statistics () {
-  const numberMealOnDiet = 77;
-  const numberMealOffDiet = 32;
+  const {
+    numberMealOffDiet,
+    numberMealOnDiet,
+    sequenceMealOnDiet
+  } = useRoute().params as StatisticsRouteParams;
 
-  const porcetage = useMemo(() => {
-    return (numberMealOnDiet / (numberMealOnDiet + numberMealOffDiet)) * 100;
-  }, []);
-
-  const isDiet: ItOnDiet = useMemo(() => {
-    return porcetage >= 70 ? 'Yes' : 'No';
-  }, [porcetage]);
+  const isDiet: ItOnDiet = itOnDietToNumberMealDiet(numberMealOnDiet, numberMealOffDiet);
 
   return (
     <Container isDiet={isDiet}>
       <ViewPadding>
-        <CardMealPorcentage porcetage={porcetage} position='left' />
+        <CardMealPorcentage
+          position='left'
+          numberMealOffDiet={numberMealOffDiet}
+          numberMealOnDiet={numberMealOnDiet}
+          sequenceMealOnDiet={0}
+        />
       </ViewPadding>
       <ContainerInfo>
         <Title>Estatísticas gerais</Title>
         <CardTitleSubtitle
           subtitle='melhor sequência de pratos dentro da dieta'
-          title='4'
+          title={String(sequenceMealOnDiet)}
         />
         <CardTitleSubtitle
           subtitle='refeições registradas'
