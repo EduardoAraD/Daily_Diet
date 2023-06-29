@@ -22,7 +22,7 @@ export const Container = styled.View<ContainerProps>`
 export const Title = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.fontFamily.BOLD};
-    font-font: ${theme.fontSize.LG}px;
+    font-size: ${theme.fontSize.LG}px;
     color: ${theme.colors.GRAY_1};
   `}
 `;

@@ -1,3 +1,4 @@
+import { FeedbackRouteParams } from '../screens/Feedback';
 import { StatisticsRouteParams } from '../screens/Statistics';
 
 export declare global {
@@ -6,6 +7,7 @@ export declare global {
       home: undefined;
       statistics: StatisticsRouteParams;
       newMeal: undefined;
+      feedback: FeedbackRouteParams;
     }
   }
 }

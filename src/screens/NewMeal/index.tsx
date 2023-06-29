@@ -1,9 +1,12 @@
 import { useCallback, useRef, useState } from 'react';
 import { TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { BackgroundHeader } from '../../components/BackgroundHeader';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
+
+import { Meal } from '../../models/Meal';
 
 import {
   Container,
@@ -15,9 +18,9 @@ import {
   ViewLabelInput,
   ViewRow
 } from './styles';
-import { Meal } from '../../models/Meal';
 
 export function NewMeal() {
+  const { navigate } = useNavigation();
 
   const newNameInputRef = useRef<TextInput>(null);
   const newDescriptionInputRef = useRef<TextInput>(null);
@@ -39,7 +42,7 @@ export function NewMeal() {
   }, []);
 
   const handleChangeHour = useCallback((hour: string) => {
-    setHour(date);
+    setHour(hour);
   }, []);
 
   const handleCreateMeal = useCallback(() => {
@@ -55,6 +58,8 @@ export function NewMeal() {
     };
 
     console.log(newMeal);
+
+    navigate('feedback', { itOnDiet: selectedDiet });
   }, [date, description, hour, selectedDiet, name]);
 
   return (
