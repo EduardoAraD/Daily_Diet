@@ -1,12 +1,13 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { BackgroundHeader } from '../../components/BackgroundHeader';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 
 import { Meal } from '../../models/Meal';
+import { ItOnDiet } from '../../models/Diet';
 
 import {
   Container,
@@ -19,7 +20,17 @@ import {
   ViewRow
 } from './styles';
 
+export type NewMealRouteProps = {
+  id: number | null;
+  name: string;
+  description: string;
+  date: string;
+  hour: string;
+  isDiet: ItOnDiet;
+}
+
 export function NewMeal() {
+  const params = useRoute().params as NewMealRouteProps;
   const { navigate } = useNavigation();
 
   const newNameInputRef = useRef<TextInput>(null);
@@ -62,8 +73,20 @@ export function NewMeal() {
     navigate('feedback', { itOnDiet: selectedDiet });
   }, [date, description, hour, selectedDiet, name]);
 
+  useEffect(() => {
+    if(params.id) {
+      setName(params.name);
+      setDescription(params.description);
+      setDate(params.date);
+      setHour(params.hour);
+      setSelectedDiet(params.isDiet);
+    }
+  }, [params]);
+
+  const titleHeader = params.id ? 'Editar refeição' : 'Refeição';
+
   return (
-    <BackgroundHeader title='Refeição'>
+    <BackgroundHeader title={titleHeader}>
       <Container>
         <Form>
           <ViewLabelInput>

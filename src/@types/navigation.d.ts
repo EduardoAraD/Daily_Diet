@@ -1,4 +1,5 @@
 import { FeedbackRouteParams } from '../screens/Feedback';
+import { NewMealRouteProps } from '../screens/NewMeal';
 import { StatisticsRouteParams } from '../screens/Statistics';
 
 export declare global {
@@ -6,8 +7,9 @@ export declare global {
     interface RootParamList {
       home: undefined;
       statistics: StatisticsRouteParams;
-      newMeal: undefined;
+      newMeal: NewMealRouteProps;
       feedback: FeedbackRouteParams;
+      mealDetails: undefined;
     }
   }
 }

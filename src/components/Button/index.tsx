@@ -2,26 +2,27 @@ import { TouchableOpacityProps } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from 'styled-components/native';
 
-import { Container, Text } from './styles';
+import { ColorContainerStyleProps, Container, Text } from './styles';
 
 type Props = TouchableOpacityProps & {
   text: string;
   icon?: '' | keyof typeof Feather.glyphMap;
+  typeColor?: ColorContainerStyleProps;
 }
 
-export function Button({ text, icon = '', ...rest }: Props) {
+export function Button({ text, icon = '', typeColor = 'PRIMARY', ...rest }: Props) {
   const { colors, fontSize } = useTheme();
 
   return (
-    <Container {...rest}>
+    <Container typeColor={typeColor} {...rest}>
       {icon !== '' && (
         <Feather 
           name={icon}
           size={fontSize.SM}
-          color={colors.WHITE} 
+          color={typeColor === 'PRIMARY' ? colors.WHITE : colors.GRAY_1} 
         />
       )}
-      <Text>{text}</Text>
+      <Text typeColor={typeColor}>{text}</Text>
     </Container>
   );
 }

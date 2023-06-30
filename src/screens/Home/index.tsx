@@ -24,7 +24,14 @@ export function Home() {
   ]);
 
   const handleNewMeal = useCallback(() => {
-    navigate('newMeal');
+    navigate('newMeal', {
+      date: '',
+      description: '',
+      hour: '',
+      id: null,
+      isDiet: 'No',
+      name: ''
+    });
   }, []);
 
   return (
@@ -52,7 +59,6 @@ export function Home() {
           <TitleWithFlatlist
             date={item}
             listMeal={list}
-            onPressCardMeal={() => { console.log('meal');}}
           />
         )}
         ItemSeparatorComponent={() => <Spacing height={32} />}
