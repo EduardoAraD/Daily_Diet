@@ -1,6 +1,7 @@
 import { ItOnDiet } from './Diet';
 
 export interface Meal {
+  id?: number;
   name: string;
   hour: string;
   date: string;
