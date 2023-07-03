@@ -6,14 +6,14 @@ import { MEAL_COLLECTION } from '../storageConfig';
 import { createRefMeal } from './createRefMeal';
 import { createNewDate } from '../Dates/createNewDate';
 import { createAllRefsMealByDate } from '../Dates/createAllRefsMealByDate';
-import { updateStatistics } from '../Statistics/updateStatistics';
+import { updateAddMealStatistics } from '../Statistics/updateAddMealStatistics';
 
 export async function createMeal(meal: Meal) {
   try {
     const refMeal = await createRefMeal();
     const date = await createNewDate(meal.date);
     await createAllRefsMealByDate(date, refMeal);
-    await updateStatistics(meal.isDiet);
+    await updateAddMealStatistics(meal.isDiet);
     
     const newMeal: Meal = {
       ...meal,

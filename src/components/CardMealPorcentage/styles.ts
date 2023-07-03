@@ -54,3 +54,10 @@ export const SubTitle = styled.Text`
   `};
   text-align: center;
 `;
+
+export const Active = styled.ActivityIndicator.attrs(({ theme }) => ({
+  color: theme.colors.GRAY_1,
+  size: 32,
+}))`
+  margin: 6px;
+`;

@@ -1,9 +1,14 @@
 import { useCallback, useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { BackgroundHeader } from '../../components/BackgroundHeader';
 import { Button } from '../../components/Button';
+import { ModalError } from '../../components/ModalError';
+import { ModalRemoveMeal } from '../../components/ModalRemoveMeal';
 
-import { ItOnDiet } from '../../models/Diet';
+import { Meal } from '../../models/Meal';
+
+import { removeMealByRef } from '../../storage/Meal/removeMealByRef';
 
 import {
   Container,
@@ -15,42 +20,51 @@ import {
   Title,
   ViewDiet
 } from './styles';
-import { ModalRemoveMeal } from '../../components/ModalRemoveMeal';
-import { useNavigation } from '@react-navigation/native';
+
+export type MealDetailsRouteParams = {
+  meal: Meal;
+}
 
 export function MealDetails() {
+  const { meal } = useRoute().params as MealDetailsRouteParams;
   const { navigate } = useNavigation();
 
   const [isVisibleModal, setIsVisibleModal] = useState(false);
+  const [isShowModalError, setIsShowModalError] = useState(false);
 
-  const itOnDiet: ItOnDiet = 'Yes';
-
-  const textDiet = itOnDiet === 'Yes' ? 'dentro da dieta' : 'fora da dieta';
+  const textDiet = meal.isDiet === 'Yes' ? 'dentro da dieta' : 'fora da dieta';
 
   const handleEditMeal = useCallback(() => {
     navigate('newMeal', {
-      date: '',
-      description: '',
-      hour: '',
-      id: 1,
-      isDiet: 'No',
-      name: ''
+      date: meal.date,
+      description: meal.description,
+      hour: meal.hour,
+      id: meal.id ?? 1,
+      isDiet: meal.isDiet,
+      name: meal.name,
     });
   }, []);
 
-  const handleRemoveMeal = useCallback(() => {
-    console.log('Abrir Modal');
+  const handleRemoveMeal = useCallback(async () => {
+    try {
+      await removeMealByRef(meal.id ?? 0);
+
+      navigate('home');
+    } catch (error) {
+      console.log(error);
+      setIsShowModalError(true);
+    }
   }, []);
 
   return(
-    <BackgroundHeader title='Refeição' color={itOnDiet === 'Yes' ? 'green' : 'red'}>
+    <BackgroundHeader title='Refeição' color={meal.isDiet === 'Yes' ? 'green' : 'red'}>
       <Container>
-        <Title>Sanduiche</Title>
-        <SubTitle>Sanduíche de pão integral com atum e salada de alface e tomate</SubTitle>
+        <Title>{meal.name}</Title>
+        <SubTitle>{meal.description}</SubTitle>
         <DateHour>Data e hora</DateHour>
-        <SubTitle>12/08/2022 às 16:00</SubTitle>
+        <SubTitle>{meal.date} às {meal.hour}</SubTitle>
         <ViewDiet>
-          <Point background={itOnDiet} />
+          <Point background={meal.isDiet} />
           <TextDiet>{textDiet}</TextDiet>
         </ViewDiet>
       </Container>
@@ -75,6 +89,13 @@ export function MealDetails() {
         animationType='fade'
         transparent
         onConfirm={handleRemoveMeal}
+      />
+      <ModalError
+        visible={isShowModalError}
+        onClose={() => setIsShowModalError(false)}
+        title='Refeição'
+        subtitle='Não foi possível remover a refeição.'
+        transparent
       />
     </BackgroundHeader>
   );

@@ -4,7 +4,7 @@ export function calPorcentageMealDiet(
   numberMealOnDiet: number,
   numberMealOffDiet: number
 ) {
-  return (numberMealOnDiet / (numberMealOnDiet + numberMealOffDiet)) * 100;
+  return (numberMealOnDiet / (numberMealOnDiet + numberMealOffDiet)) * 100 | 0;
 }
 
 export function itOnDietToNumberMealDiet(

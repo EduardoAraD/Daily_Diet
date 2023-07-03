@@ -2,7 +2,9 @@ import { useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { ItOnDiet } from '../../models/Diet';
+
 import { calPorcentageMealDiet, itOnDietToNumberMealDiet } from '../../utils/CalcPorcentage';
+
 import {
   Container,
   IconArrowLeft,
@@ -10,7 +12,8 @@ import {
   SubTitle,
   Title,
   PositionArrowTypeStyleProps,
-  Touch
+  Touch,
+  Active
 } from './styles';
 
 interface Props {
@@ -18,6 +21,7 @@ interface Props {
   numberMealOnDiet: number;
   numberMealOffDiet: number;
   sequenceMealOnDiet: number;
+  loading?: boolean;
 }
 
 export function CardMealPorcentage({
@@ -25,6 +29,7 @@ export function CardMealPorcentage({
   numberMealOffDiet,
   numberMealOnDiet,
   sequenceMealOnDiet,
+  loading,
 } : Props) {
   const { navigate } = useNavigation();
 
@@ -52,7 +57,10 @@ export function CardMealPorcentage({
           <IconArrowUpRight isDiet={isDiet} />
         )}
       </Touch>
-      <Title>{porcentage.toPrecision(4)}%</Title>
+      {loading ?
+        <Active /> :
+        <Title>{porcentage.toPrecision(3)}%</Title>
+      }
       <SubTitle>das refeições dentro da dieta</SubTitle>
     </Container>
   );

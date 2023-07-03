@@ -6,17 +6,14 @@ import { Statistic } from '../../models/Statistics';
 import { STATISTICS } from '../storageConfig';
 import { getStatistics } from './getStatistics';
 
-export async function updateStatistics(itOnDiet: ItOnDiet) {
+export async function updateRemoveMealStatistics(itOnDiet: ItOnDiet) {
   try {
     const statistic = await getStatistics();
-    const sequenceCurrent = itOnDiet === 'No' ? 0 : (1 + statistic.sequenceCurrent);
-    const sequence = sequenceCurrent > statistic.sequence ? sequenceCurrent : statistic.sequence;
-
+    
     const newStatistic: Statistic = {
-      numberAllOffDiet: (itOnDiet === 'Yes' ? 0 : 1) + statistic.numberAllOffDiet,
-      numberAllOnDiet: (itOnDiet === 'Yes' ? 1 : 0) + statistic.numberAllOnDiet,
-      sequence,
-      sequenceCurrent,
+      ...statistic,
+      numberAllOffDiet: statistic.numberAllOffDiet - (itOnDiet === 'Yes' ? 0 : 1),
+      numberAllOnDiet: statistic.numberAllOnDiet - (itOnDiet === 'Yes' ? 1 : 0),
     };
     
     await AsyncStorage.setItem(STATISTICS, JSON.stringify(newStatistic));

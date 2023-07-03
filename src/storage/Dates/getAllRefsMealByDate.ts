@@ -6,7 +6,7 @@ export async function getAllRefsByDate(date: string) {
   try {
     const storage = await AsyncStorage.getItem(`${DATE_REF_MEAL_COLLECTION}-${date}`);
 
-    const listRefByDate = storage ? JSON.parse(storage) : [];
+    const listRefByDate: number[] = storage ? JSON.parse(storage) : [];
     return listRefByDate;
 
   } catch (error) {

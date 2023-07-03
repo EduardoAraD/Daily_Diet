@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { useRoute } from '@react-navigation/native';
 
 import { CardMealPorcentage } from '../../components/CardMealPorcentage';
@@ -31,7 +30,7 @@ export function Statistics () {
           position='left'
           numberMealOffDiet={numberMealOffDiet}
           numberMealOnDiet={numberMealOnDiet}
-          sequenceMealOnDiet={0}
+          sequenceMealOnDiet={sequenceMealOnDiet}
         />
       </ViewPadding>
       <ContainerInfo>

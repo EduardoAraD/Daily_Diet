@@ -7,8 +7,7 @@ import { AppError } from '../../utils/AppError';
 
 export async function createAllRefsMealByDate(date: string, refMeal: number) {
   try {
-    const storageRefs = await getAllRefsByDate(date);
-    const listRefs: number[] = storageRefs ? JSON.parse(storageRefs) : [];
+    const listRefs = await getAllRefsByDate(date);
 
     if(listRefs.includes(refMeal)) {
       throw new AppError('Id inválido');
